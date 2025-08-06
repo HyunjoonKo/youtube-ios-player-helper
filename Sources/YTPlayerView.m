@@ -73,7 +73,7 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
 
 @end
 
-@interface YTPlayerView() <WKNavigationDelegate>
+@interface YTPlayerView() <WKNavigationDelegate, WKUIDelegate>
 
 @property (nonatomic) NSURL *originURL;
 @property (nonatomic, weak) UIView *initialLoadingView;
@@ -823,6 +823,20 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     }
 }
 
+#pragma mark - WKUIDelegate
+
+- (WKWebView *)webView:(WKWebView *)webView
+createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
+   forNavigationAction:(WKNavigationAction *)navigationAction
+        windowFeatures:(WKWindowFeatures *)windowFeatures {
+  // Handle navigation actions initiated by Javascript.
+  [[UIApplication sharedApplication] openURL:navigationAction.request.URL
+                                     options:@{}
+                           completionHandler:nil];
+  // Returning nil results in canceling the navigation, which has already been handled above.
+  return nil;
+}
+
 #pragma mark - Private methods
 
 /* Blocked a frame with origin "http://co.vlending.mubeat.dev" from accessing a frame with origin "https://www.youtube.com".  The frame requesting access has a protocol of "http", the frame being accessed has a protocol of "https". Protocols must match. */
@@ -998,81 +1012,80 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     };
     NSMutableDictionary *playerParams = [[NSMutableDictionary alloc] init];
     if (additionalPlayerParams) {
-        [playerParams addEntriesFromDictionary:additionalPlayerParams];
+      [playerParams addEntriesFromDictionary:additionalPlayerParams];
     }
     if (![playerParams objectForKey:@"height"]) {
-        [playerParams setValue:@"100%" forKey:@"height"];
+      [playerParams setValue:@"100%" forKey:@"height"];
     }
     if (![playerParams objectForKey:@"width"]) {
-        [playerParams setValue:@"100%" forKey:@"width"];
+      [playerParams setValue:@"100%" forKey:@"width"];
     }
-    
+
     [playerParams setValue:playerCallbacks forKey:@"events"];
     
     NSMutableDictionary *playerVars = [[playerParams objectForKey:@"playerVars"] mutableCopy];
     if (!playerVars) {
-        // playerVars must not be empty so we can render a '{}' in the output JSON
-        playerVars = [NSMutableDictionary dictionary];
+      // playerVars must not be empty so we can render a '{}' in the output JSON
+      playerVars = [NSMutableDictionary dictionary];
     }
     // We always want to ovewrite the origin to self.originURL, not just for
     // the webView.baseURL
     [playerVars setObject:self.originURL.absoluteString forKey:@"origin"];
     [playerParams setValue:playerVars forKey:@"playerVars"];
-    
+
     // Remove the existing webview to reset any state
     [self.webView removeFromSuperview];
     _webView = [self createNewWebView];
     [self addSubview:self.webView];
-    
+
     NSError *error = nil;
     NSString *path = [[NSBundle bundleForClass:[YTPlayerView class]] pathForResource:@"YTPlayerView-iframe-player"
-                                                                              ofType:@"html"
-                                                                         inDirectory:@"Assets"];
-    
+                                                                              ofType:@"html"];
+      
     // in case of using Swift and embedded frameworks, resources included not in main bundle,
     // but in framework bundle
     if (!path) {
         path = [[[self class] frameworkBundle] pathForResource:@"YTPlayerView-iframe-player"
-                                                        ofType:@"html"
-                                                   inDirectory:@"Assets"];
+                                                        ofType:@"html"];
     }
-    
+      
     NSString *embedHTMLTemplate =
-    [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-    
+        [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+
     if (error) {
-        NSLog(@"Received error rendering template: %@", error);
-        return NO;
+      NSLog(@"Received error rendering template: %@", error);
+      return NO;
     }
-    
+
     // Render the playerVars as a JSON dictionary.
     NSError *jsonRenderingError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:playerParams
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&jsonRenderingError];
     if (jsonRenderingError) {
-        NSLog(@"Attempted configuration of player with invalid playerVars: %@ \tError: %@",
-              playerParams,
-              jsonRenderingError);
-        return NO;
+      NSLog(@"Attempted configuration of player with invalid playerVars: %@ \tError: %@",
+            playerParams,
+            jsonRenderingError);
+      return NO;
     }
-    
+
     NSString *playerVarsJsonString =
-    [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
+        [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
     NSString *embedHTML = [NSString stringWithFormat:embedHTMLTemplate, playerVarsJsonString];
-    
+
     [self.webView loadHTMLString:embedHTML baseURL: self.originURL];
     self.webView.navigationDelegate = self;
-    
+    self.webView.UIDelegate = self;
+
     if ([self.delegate respondsToSelector:@selector(playerViewPreferredInitialLoadingView:)]) {
-        UIView *initialLoadingView = [self.delegate playerViewPreferredInitialLoadingView:self];
-        if (initialLoadingView) {
-            initialLoadingView.frame = self.bounds;
-            initialLoadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [self addSubview:initialLoadingView];
-            self.initialLoadingView = initialLoadingView;
-        }
+      UIView *initialLoadingView = [self.delegate playerViewPreferredInitialLoadingView:self];
+      if (initialLoadingView) {
+        initialLoadingView.frame = self.bounds;
+        initialLoadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addSubview:initialLoadingView];
+        self.initialLoadingView = initialLoadingView;
+      }
     }
     
     return YES;
@@ -1238,14 +1251,18 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 }
 
 + (NSBundle *)frameworkBundle {
-    static NSBundle* frameworkBundle = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        NSString* mainBundlePath = [[NSBundle bundleForClass:[self class]] resourcePath];
-        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:@"Assets.bundle"];
-        frameworkBundle = [NSBundle bundleWithPath:frameworkBundlePath];
-    });
-    return frameworkBundle;
+#ifdef SWIFTPM_MODULE_BUNDLE
+  return SWIFTPM_MODULE_BUNDLE;
+#else
+  static NSBundle* frameworkBundle = nil;
+  static dispatch_once_t predicate;
+  dispatch_once(&predicate, ^{
+      NSString* mainBundlePath = [[NSBundle bundleForClass:[self class]] resourcePath];
+      NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:@"Assets.bundle"];
+      frameworkBundle = [NSBundle bundleWithPath:frameworkBundlePath];
+  });
+  return frameworkBundle;
+#endif
 }
 
 #pragma mark - Ad
