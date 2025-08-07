@@ -45,6 +45,7 @@ NSString static *const kYTPlayerErrorVideoNotFoundErrorCode = @"100";
 NSString static *const kYTPlayerErrorNotEmbeddableErrorCode = @"101";
 NSString static *const kYTPlayerErrorCannotFindVideoErrorCode = @"105";
 NSString static *const kYTPlayerErrorSameAsNotEmbeddableErrorCode = @"150";
+NSString static *const kYTPlayerErrorEmbedderIdentityDeniedErrorCode = @"152";
 
 // Constants representing player callbacks.
 NSString static *const kYTPlayerCallbackOnReady = @"onReady";
@@ -906,6 +907,8 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
             } else if ([data isEqual:kYTPlayerErrorVideoNotFoundErrorCode] ||
                        [data isEqual:kYTPlayerErrorCannotFindVideoErrorCode]) {
                 error = kYTPlayerErrorVideoNotFound;
+            } else if ([data isEqual:kYTPlayerErrorEmbedderIdentityDeniedErrorCode]) {
+                error = kYTPlayerErrorIdentityDenied;
             }
             
             [self.delegate playerView:self receivedError:error];
@@ -1003,6 +1006,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
  * @return YES if successful, NO if not.
  */
 - (BOOL)loadWithPlayerParams:(NSDictionary *)additionalPlayerParams {
+    
     NSDictionary *playerCallbacks = @{
         @"onReady" : @"onReady",
         @"onStateChange" : @"onStateChange",
@@ -1030,7 +1034,16 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     }
     // We always want to ovewrite the origin to self.originURL, not just for
     // the webView.baseURL
-    [playerVars setObject:self.originURL.absoluteString forKey:@"origin"];
+    NSString *originDomain = [playerVars objectForKey:@"origin"];
+    if (originDomain != nil && ![originDomain isEqualToString:@""]) {
+        if ([originDomain hasPrefix:@"http"]) {
+            _originURL = [NSURL URLWithString: originDomain];
+        } else {
+            _originURL = [NSURL URLWithString: [NSString stringWithFormat:@"https://%@", originDomain]];
+        }
+    } else {
+        [playerVars setObject:self.originURL.absoluteString forKey:@"origin"];
+    }
     [playerParams setValue:playerVars forKey:@"playerVars"];
 
     // Remove the existing webview to reset any state
@@ -1038,6 +1051,11 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     _webView = [self createNewWebView];
     [self addSubview:self.webView];
 
+#if DEBUG
+    if ([_webView respondsToSelector: NSSelectorFromString(@"setInspectable:")]) {
+        [_webView performSelector: NSSelectorFromString(@"setInspectable:") withObject: [NSNumber numberWithBool: YES]];
+    }
+#endif
     NSError *error = nil;
     NSString *path = [[NSBundle bundleForClass:[YTPlayerView class]] pathForResource:@"YTPlayerView-iframe-player"
                                                                               ofType:@"html"];

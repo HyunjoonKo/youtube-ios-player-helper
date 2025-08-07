@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, YTPlayerError) {
     // 105 have been collapsed into |kYTPlayerErrorVideoNotFound|.
     kYTPlayerErrorNotEmbeddable, // Functionally equivalent error codes 101 and
     // 150 have been collapsed into |kYTPlayerErrorNotEmbeddable|.
+    kYTPlayerErrorIdentityDenied, // If the error code is 152, please stop the video player and then try playing it again after a while.
     kYTPlayerErrorUnknown
 };
 
@@ -116,7 +117,7 @@ typedef void (^YTPlaybackQualityCompletionHandler)(YTPlaybackQuality result,
  * Callback invoked when setting up the webview to allow custom colours so it fits in
  * with app color schemes. If a transparent view is required specify clearColor and
  * the code will handle the opacity etc.
- * 
+ *
  * @param playerView The YTPlayerView instance where the error has occurred.
  * @return A color object that represents the background color of the webview.
  */
@@ -130,13 +131,13 @@ typedef void (^YTPlaybackQualityCompletionHandler)(YTPlaybackQuality result,
  *
  * The default implementation does not display any custom loading views so the player will display
  * a blank view with a background color of (-playerViewPreferredWebViewBackgroundColor:).
- * 
- * Note that the custom loading view WILL NOT be displayed after iframe is loaded. It will be 
+ *
+ * Note that the custom loading view WILL NOT be displayed after iframe is loaded. It will be
  * handled by YouTube iframe API. This callback is just intended to tell users the view is actually
  * doing something while iframe is being loaded, which will take some time if users are in poor networks.
  *
  * @param playerView The YTPlayerView instance where the error has occurred.
- * @return A view object that will be displayed while YouTube iframe API is being loaded. 
+ * @return A view object that will be displayed while YouTube iframe API is being loaded.
  *         Pass nil to display no custom loading view. Default implementation returns nil.
  */
 - (nullable UIView *)playerViewPreferredInitialLoadingView:(nonnull YTPlayerView *)playerView;
