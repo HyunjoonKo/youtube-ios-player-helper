@@ -12,7 +12,8 @@ Note:
 The subtitles and PiP functions work after all the videos have been loaded. You should observe the point in time through observer to make the desired function work.
 And you need to enter an appropriate value in the video load option. For example:
 - PiP: Set the values of `playsinline`, `enablejsapi`, and `picture-in-picture` to true.
-- Subtitles: After setting the values of `enablejsapi` and `cc_load_policy` to true, set the language values in `cc_lang_pref` and `hl`.
+  - Update: The PIP feature can only be used if the origin value is a YouTube domain. However, if you use a YouTube domain after August 2025, an unknown error will occur. In this case, we modified it to return `kYTPlayerErrorIdentityDenied`. If you receive this error, stop the player and try playing it again after 0.5 seconds.
+- Subtitles: After setting the values of `enablejsapi` to true, set the language values in `cc_lang_pref` and `hl`.
 
 ## Usage
 
