@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 inhibit_all_warnings!
 use_frameworks!
 
 target "youtube-player-ios-example" do
-  pod "youtube-ios-player-helper", :path => "../../youtube-ios-player-helper.podspec"
+  pod "youtube-ios-player-helper", :git => 'https://github.com/HyunjoonKo/youtube-ios-player-helper.git', :branch => 'master' # , :path => "../../youtube-ios-player-helper.podspec"
 
   target "youtube-player-ios-exampleTests" do
     pod "OCMock", "3.7.1"

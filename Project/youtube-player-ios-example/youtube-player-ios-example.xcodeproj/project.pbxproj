@@ -238,7 +238,11 @@
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "YouTube Developer Relations";
 				TargetAttributes = {
+					4D6993DD18E22E0C0073680F = {
+						DevelopmentTeam = HNWHWD9KZA;
+					};
 					4D6993FE18E22E0C0073680F = {
+						DevelopmentTeam = HNWHWD9KZA;
 						TestTargetID = 4D6993DD18E22E0C0073680F;
 					};
 				};
@@ -526,9 +530,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CURRENT_PROJECT_VERSION = 60;
+				DEVELOPMENT_TEAM = HNWHWD9KZA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youtube-player-ios-example/youtube-player-ios-example-Prefix.pch";
 				INFOPLIST_FILE = "youtube-player-ios-example/youtube-player-ios-example-Info.plist";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.youtube.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -542,9 +549,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CURRENT_PROJECT_VERSION = 60;
+				DEVELOPMENT_TEAM = HNWHWD9KZA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youtube-player-ios-example/youtube-player-ios-example-Prefix.pch";
 				INFOPLIST_FILE = "youtube-player-ios-example/youtube-player-ios-example-Info.plist";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.youtube.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -557,6 +567,7 @@
 			baseConfigurationReference = 7D6080CDCBA15B2A906634FD /* Pods-youtube-player-ios-example-youtube-player-ios-exampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = HNWHWD9KZA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -569,6 +580,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "youtube-player-ios-exampleTests/youtube-player-ios-exampleTests-Info.plist";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.youtube.demo.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/youtube-player-ios-example.app/youtube-player-ios-example";
 				WRAPPER_EXTENSION = xctest;
@@ -580,6 +592,7 @@
 			baseConfigurationReference = 2E9AA7CE5B23225F06EB9523 /* Pods-youtube-player-ios-example-youtube-player-ios-exampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = HNWHWD9KZA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -588,6 +601,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youtube-player-ios-example/youtube-player-ios-example-Prefix.pch";
 				INFOPLIST_FILE = "youtube-player-ios-exampleTests/youtube-player-ios-exampleTests-Info.plist";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.youtube.demo.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/youtube-player-ios-example.app/youtube-player-ios-example";
 				WRAPPER_EXTENSION = xctest;
