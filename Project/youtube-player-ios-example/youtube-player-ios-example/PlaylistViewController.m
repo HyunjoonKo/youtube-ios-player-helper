@@ -27,7 +27,8 @@
     @"playsinline" : @1,
     @"autohide" : @1,
     @"showinfo" : @0,
-    @"modestbranding" : @1
+    @"modestbranding" : @1,
+    @"origin" : @"https://youtube.com"
   };
   self.playerView.delegate = self;
 
