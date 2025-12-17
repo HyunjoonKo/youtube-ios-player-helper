@@ -28,11 +28,16 @@ NSString static *const kYTPlayerStateCuedCode = @"5";
 NSString static *const kYTPlayerStateUnknownCode = @"unknown";
 
 // Constants representing playback quality.
+// ../www-embed-player-pc.vflset/www-embed-player-pc.js
+// ika = (V6.auto = 0, V6.tiny = 144, V6.light = 144, V6.small = 240, V6.medium = 360, V6.large = 480, V6.hd720 = 720, V6.hd1080 = 1080, V6.hd1440 = 1440, V6.hd2160 = 2160, V6.hd2880 = 2880, V6.highres = 4320, V6);
 NSString static *const kYTPlaybackQualitySmallQuality = @"small";
 NSString static *const kYTPlaybackQualityMediumQuality = @"medium";
 NSString static *const kYTPlaybackQualityLargeQuality = @"large";
 NSString static *const kYTPlaybackQualityHD720Quality = @"hd720";
 NSString static *const kYTPlaybackQualityHD1080Quality = @"hd1080";
+NSString static *const kYTPlaybackQualityHD1440Quality = @"hd1440";
+NSString static *const kYTPlaybackQualityHD2160Quality = @"hd2160";
+NSString static *const kYTPlaybackQualityHD2880Quality = @"hd2880";
 NSString static *const kYTPlaybackQualityHighResQuality = @"highres";
 NSString static *const kYTPlaybackQualityAutoQuality = @"auto";
 NSString static *const kYTPlaybackQualityDefaultQuality = @"default";
@@ -755,6 +760,12 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
         quality = kYTPlaybackQualityHD720;
     } else if ([qualityString isEqualToString:kYTPlaybackQualityHD1080Quality]) {
         quality = kYTPlaybackQualityHD1080;
+    } else if ([qualityString isEqualToString:kYTPlaybackQualityHD1440Quality]) {
+        quality = kYTPlaybackQualityHD1440;
+    } else if ([qualityString isEqualToString:kYTPlaybackQualityHD2160Quality]) {
+        quality = kYTPlaybackQualityHD2160;
+    } else if ([qualityString isEqualToString:kYTPlaybackQualityHD2880Quality]) {
+        quality = kYTPlaybackQualityHD2880;
     } else if ([qualityString isEqualToString:kYTPlaybackQualityHighResQuality]) {
         quality = kYTPlaybackQualityHighRes;
     } else if ([qualityString isEqualToString:kYTPlaybackQualityAutoQuality]) {
