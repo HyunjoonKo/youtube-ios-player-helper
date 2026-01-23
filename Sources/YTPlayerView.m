@@ -489,16 +489,16 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
 
 /*
  [{
- displayName = Spanish;
- id = "<null>";
- "is_default" = 0;
- "is_servable" = 0;
- "is_translateable" = 1;
- kind = "";
- languageCode = es;
- languageName = Spanish;
- name = "<null>";
- "vss_id" = ".es";
+     displayName = Spanish;
+     id = "<null>";
+     "is_default" = 0;
+     "is_servable" = 0;
+     "is_translateable" = 1;
+     kind = "";
+     languageCode = es;
+     languageName = Spanish;
+     name = "<null>";
+     "vss_id" = ".es";
  }]
  */
 - (void)captionTracks:(_Nullable YTArrayCompletionHandler)completionHandler {
@@ -610,24 +610,24 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
         // Error Domain=WKErrorDomain Code=4 "A JavaScript exception occurred" UserInfo={WKJavaScriptExceptionLineNumber=0, WKJavaScriptExceptionMessage=TypeError: undefined is not a function, WKJavaScriptExceptionColumnNumber=0, NSLocalizedDescription=A JavaScript exception occurred}
         /*
          {
-         NSLocalizedDescription = "A JavaScript exception occurred";
-         WKJavaScriptExceptionColumnNumber = 32;
-         WKJavaScriptExceptionLineNumber = 1;
-         WKJavaScriptExceptionMessage = "TypeError: null is not an object (evaluating 'document.querySelector('video').webkitSetPresentationMode')";
-         WKJavaScriptExceptionSourceURL = "http://co.vlending.mubeat.dev/";
+             NSLocalizedDescription = "A JavaScript exception occurred";
+             WKJavaScriptExceptionColumnNumber = 32;
+             WKJavaScriptExceptionLineNumber = 1;
+             WKJavaScriptExceptionMessage = "TypeError: null is not an object (evaluating 'document.querySelector('video').webkitSetPresentationMode')";
+             WKJavaScriptExceptionSourceURL = "http://co.vlending.mubeat.dev/";
          }
          */
         /*
          if (!completionHandler) {
-         return;
+            return;
          }
          if (error) {
-         completionHandler(nil, error);
-         return;
+            completionHandler(nil, error);
+            return;
          }
          if (!result || ![result isKindOfClass:[NSString class]]) {
-         completionHandler(nil, nil);
-         return;
+            completionHandler(nil, nil);
+            return;
          }
          completionHandler(result, nil);
          */
@@ -641,24 +641,24 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
         // Error Domain=WKErrorDomain Code=4 "A JavaScript exception occurred" UserInfo={WKJavaScriptExceptionLineNumber=0, WKJavaScriptExceptionMessage=TypeError: undefined is not a function, WKJavaScriptExceptionColumnNumber=0, NSLocalizedDescription=A JavaScript exception occurred}
         /*
          {
-         NSLocalizedDescription = "A JavaScript exception occurred";
-         WKJavaScriptExceptionColumnNumber = 32;
-         WKJavaScriptExceptionLineNumber = 1;
-         WKJavaScriptExceptionMessage = "TypeError: null is not an object (evaluating 'document.querySelector('video').webkitSetPresentationMode')";
-         WKJavaScriptExceptionSourceURL = "http://co.vlending.mubeat.dev/";
+             NSLocalizedDescription = "A JavaScript exception occurred";
+             WKJavaScriptExceptionColumnNumber = 32;
+             WKJavaScriptExceptionLineNumber = 1;
+             WKJavaScriptExceptionMessage = "TypeError: null is not an object (evaluating 'document.querySelector('video').webkitSetPresentationMode')";
+             WKJavaScriptExceptionSourceURL = "http://co.vlending.mubeat.dev/";
          }
          */
         /*
          if (!completionHandler) {
-         return;
+            return;
          }
          if (error) {
-         completionHandler(nil, error);
-         return;
+            completionHandler(nil, error);
+            return;
          }
          if (!result || ![result isKindOfClass:[NSString class]]) {
-         completionHandler(nil, nil);
-         return;
+            completionHandler(nil, nil);
+            return;
          }
          completionHandler(result, nil);
          */
@@ -671,15 +671,15 @@ NSString static *const kYTPlayerSyndicationRegexPattern = @"^https://tpc.googles
            completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
         /*
          if (!completionHandler) {
-         return;
+            return;
          }
          if (error) {
-         completionHandler(nil, error);
-         return;
+            completionHandler(nil, error);
+            return;
          }
          if (!result || ![result isKindOfClass:[NSString class]]) {
-         completionHandler(nil, nil);
-         return;
+            completionHandler(nil, nil);
+            return;
          }
          completionHandler(result, nil);
          */
